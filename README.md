@@ -10,3 +10,14 @@ player: https://elthen.itch.io/2d-pixel-art-imp-sprites / https://zneeke.itch.io
 
 idea : lockpick imp / pickpocket imp
 
+features :
+
+chat bubble	: using draw pixel by pixel -> rectangle(x, y, len, wid, fill_colour, border_size, border_colour);
+			: write text -> text(x, y, *str, colour);
+			: chat bubble -> say(*str, who); *who has assigned colours and (x, y) traced. who : select, exit !check for displaying on borders
+imp on exit -> text displays random printable signs, preferably UNICODE in Cursive (?) red, changes letter by letter into "COINS!" in yellow (without cursive ?)with last letter left old value in red. 
+all coins collected -> glyph changes colour.
+random number generator : generates a random number from 0 to max -> random(max);
+
+
+Map checker	: returns a structure that contains size of map, map plan, number of elements 
