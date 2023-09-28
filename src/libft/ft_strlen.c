@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:45:55 by kglebows          #+#    #+#             */
-/*   Updated: 2023/09/25 14:06:27 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:03:55 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ft_strlen_nl(const char *s)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] != 0 && s[i] != '\n')
 		i++;
 	return (i);

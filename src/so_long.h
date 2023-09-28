@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/09/28 17:28:25 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:54:13 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ typedef struct s_map
 	char				**map;
 	char				*path;
 	int					fd;
-	int					code;
 	int					P_num;
 	int					E_num;
 	int					C_num;
 }						t_map;
 
-int	line2map(char *str, t_map *map);
+int		ft_error(int code);
 
 #endif

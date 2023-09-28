@@ -6,14 +6,14 @@
 #    By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 18:20:23 by kglebows          #+#    #+#              #
-#    Updated: 2023/09/22 15:55:26 by kglebows         ###   ########.fr        #
+#    Updated: 2023/09/28 19:31:43 by kglebows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 LIBMLX := ./MLX42
 
 HEADERS := -I ./include -I $(LIBMLX)/include
@@ -27,7 +27,7 @@ SRCDIR = ./src
 HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 # SRCS	= $(shell find ./src -iname "*.c")
-SRCS = main.c
+SRCS = main.c error.c
 OBJS	= $(SRCS:%.c=$(OBJDIR)/%.o)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
