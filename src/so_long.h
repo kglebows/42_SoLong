@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/09/22 16:27:34 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/09/28 17:28:25 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ typedef struct s_map
 	int					height;
 	int					width;
 	char				**map;
+	char				*path;
+	int					fd;
+	int					code;
 	int					P_num;
 	int					E_num;
 	int					C_num;
