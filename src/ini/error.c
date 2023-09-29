@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 19:29:04 by kglebows          #+#    #+#             */
-/*   Updated: 2023/09/28 19:59:30 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:07:54 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ int ft_error(int code)
 		return (ft_printf("Wrong input! Missing map path!\n") * 0 + 2);
 	else if (code == -19)
 		return (ft_printf("Wrong input! Too many arguments!\n") * 0 + 2);
+	else if (code == -20)
+		return (ft_printf("MLX gone bad! brrrr bww bum pfff pstttt trrr. it's dead.\n:'(\n") * 0 + 2);
+	else if (code == -21)
+		return (ft_printf("MLX gone bad! image generation failed!\n:'(\n") * 0 + 2);
 	else
 		return (ft_printf("Unknown Error! Please contact the developer.\n") * 0 + 2);
 	//clean up : close fd if exists

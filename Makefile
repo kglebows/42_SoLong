@@ -6,7 +6,7 @@
 #    By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 18:20:23 by kglebows          #+#    #+#              #
-#    Updated: 2023/09/28 19:31:43 by kglebows         ###   ########.fr        #
+#    Updated: 2023/09/29 17:32:12 by kglebows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME = so_long
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
-LIBMLX := ./MLX42
+
+CFLAGS_MLX := -Wextra -Wall -Werror -Wunreachable-code -Ofast
+LIBMLX := ./src/lib/MLX42
 
 HEADERS := -I ./include -I $(LIBMLX)/include
 
@@ -24,10 +26,15 @@ LIBFTDIR = src/libft
 OBJDIR = ./bin
 SRCDIR = ./src
 
+LIBMLXA := $(LIBMLX)/build/libmlx42.a
+
 HEADERS	:= -I ./include -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
-# SRCS	= $(shell find ./src -iname "*.c")
-SRCS = main.c error.c
+LIB_MLX	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+SRC_MLX	:= $(shell find ./src -iname "*.c")
+OBJ_MLX := ${SRC_MLX:.c=.o}
+
+SRCS	= main.c \
+		ini/error.c ini/ini.c ini/map.c ini/utils.c
 OBJS	= $(SRCS:%.c=$(OBJDIR)/%.o)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
@@ -39,10 +46,14 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 		echo "$$OUTPUT" && echo "\033[0;31m$< KO!\033[0m" && exit 1; \
 	fi
 
-all: makelibft $(NAME)
+%.o: %.c
+	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
 
-libmlx:
+all: makelibft $(LIBMLXA) $(NAME)
+
+$(LIBMLXA):
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+
 
 makelibft:
 	@if [ ! -f "$(LIBFTNAME)" ]; then \
@@ -53,7 +64,7 @@ makelibft:
 	fi
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(OBJDIR)/libft -lft
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_MLX) $(HEADERS) -L$(OBJDIR)/libft -lft
 
 clean-empty-dirs:
 	@if [ -d $(OBJDIR) ]; then find $(OBJDIR) -type d -empty -exec rmdir {} +; fi
@@ -69,6 +80,7 @@ clean:
 		echo "\033[0;33mlibft *.o deleted\033[0m"; \
 	fi
 	@$(MAKE) clean-empty-dirs
+	@rm -rf $(LIBMLX)/build
 
 fclean: clean
 	@if [ -f "$(NAME)" ]; then \
