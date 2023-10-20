@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 19:29:04 by kglebows          #+#    #+#             */
-/*   Updated: 2023/09/29 17:07:54 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:30:10 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int ft_error(int code)
 		return (ft_printf("MLX gone bad! brrrr bww bum pfff pstttt trrr. it's dead.\n:'(\n") * 0 + 2);
 	else if (code == -21)
 		return (ft_printf("MLX gone bad! image generation failed!\n:'(\n") * 0 + 2);
+	else if (code == -22)
+		return (ft_printf("MLX gone bad! image to window failure!\n:'(\n") * 0 + 2);
 	else
 		return (ft_printf("Unknown Error! Please contact the developer.\n") * 0 + 2);
 	//clean up : close fd if exists

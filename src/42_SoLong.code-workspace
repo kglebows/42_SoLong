@@ -2,10 +2,12 @@
 	"folders": [
 		{
 			"path": ".."
-		},
-		{
-			"path": "../../Evaluations/cpp03-mrezaei"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"system_error": "c",
+			"so_long.h": "c"
+		}
+	}
 }
