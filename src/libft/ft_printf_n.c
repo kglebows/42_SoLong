@@ -6,13 +6,13 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:19:58 by kglebows          #+#    #+#             */
-/*   Updated: 2023/08/24 13:06:57 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/21 10:31:41 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_countnumbers(int n)
+int	ft_countnumbersss(int n)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ int	ft_printf_n(int n)
 {
 	int	printed;
 
-	printed = ft_countnumbers(n);
+	printed = ft_countnumbersss(n);
 	ft_putnbr_fd(n, 1);
 	return (printed);
 }

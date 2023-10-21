@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/20 20:59:19 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/21 15:18:42 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void	print_map(t_map *map)
 // 	ft_printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
 // }
 
-void	background_(t_map *map)
+void	free_map(t_map *map)
 {
-	int		i;
-	int		j;
+	int				i;
+	int				j;
+
 
 	i = 1;
 	while (i < map->width - 1)
@@ -44,38 +45,61 @@ void	background_(t_map *map)
 		j = 1;
 		while (j < map->height - 1)
 		{
-			ft_put_tile(i, j, "./src/assets/Inventory_Slot.png", map);
-			if (map->map[j][i] == '1')
-			{
-				ft_put_wall(i, j, "./src/assets/wall/tile000.png", map);
-			}
+			if (map->after_img[i][j] != NULL)
+				mlx_delete_image(map->mlx, map->after_img[i][j]);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	background(t_map *map)
+void	frame_map(t_map *map)
 {
-	int			i;
+	int				i;
+	int				j;
 
-	ft_put_tile( 0, 0, "./src/assets/background/tile000.png", map);
-	ft_put_tile( 0, map->height - 1, "./src/assets/background/tile006.png", map);
-	ft_put_tile( map->width - 1, 0, "./src/assets/background/tile002.png", map);
-	ft_put_tile( map->width - 1, map->height - 1, "./src/assets/background/tile008.png", map);
-	i = 0;
-	while (i++ < map->width - 2)
+	// free_map(map);
+	i = 1;
+	while (i < map->width - 1)
 	{
-		ft_put_tile(i, 0, "./src/assets/background/tile001.png", map);
-		ft_put_tile(i, map->height - 1, "./src/assets/background/tile007.png", map);
+		j = 1;
+		while (j < map->height - 1)
+		{
+			if (map->map[j][i] == 'P')
+				map->img_map[i][j] = ft_put_imp(i, j, map);
+			else if (map->map[j][i] == 'E')
+				map->img_map[i][j] = ft_put_exit(i, j, map);
+			else if (map->map[j][i] == 'C')
+				map->img_map[i][j] = ft_put_coin(i, j, map);
+			j++;
+		}
+		i++;
 	}
-	i = 0;
-	while (i++ < map->height - 2)
+}
+
+
+void	ft_frame(void *param)
+{
+	t_map	*map;
+
+	map = (t_map *) param;
+	if (map->time < 903)
+		map->time++;
+	else
+		map->time = 0;
+	if (map->time % 10 == 2)
+		free_map(map);
+	if (map->time % 10 == 0)
 	{
-		ft_put_tile(0, i, "./src/assets/background/tile003.png", map);
-		ft_put_tile(map->width - 1, i, "./src/assets/background/tile005.png", map);
+		map->frame++;
+		if (map->frame > 12)
+			map->frame = 0;
+		frame_map(map);
+		// ft_printf("%d FRAME\n", map->frame);
+		
 	}
-	background_(map);
+	// ft_printf("%d\n", map->mlx->delta_time);
+	// free_map(map);
 }
 
 int	main(int argn, char *argc[])
@@ -95,61 +119,24 @@ int	main(int argn, char *argc[])
 	map.mlx = mlx_init(TILE_SIZE * map.width, TILE_SIZE * map.height, "Pickpocket Imp", true);
 	if (!map.mlx)
 		return (ft_error(-20));
-	background(&map);
+	ft_background(&map);
 	
+	// mlx_texture_t *player = mlx_load_png("./src/assets/player.png");
+	// mlx_texture_t *exit = mlx_load_png("./src/assets/exit.png");
+	// mlx_texture_t *coin = mlx_load_png("./src/assets/coin.png");
+	// mlx_texture_t *wall = mlx_load_png("./src/assets/wall.png");
 	
-	mlx_texture_t *player = mlx_load_png("./src/assets/player.png");
-	mlx_texture_t *exit = mlx_load_png("./src/assets/exit.png");
-	mlx_texture_t *coin = mlx_load_png("./src/assets/coin.png");
-	mlx_texture_t *wall = mlx_load_png("./src/assets/wall.png");
-	
-	mlx_image_t* img_player = mlx_texture_to_image(map.mlx, player);
-	mlx_image_t* img_exit = mlx_texture_to_image(map.mlx, exit);
-	mlx_image_t* img_coin = mlx_texture_to_image(map.mlx, coin);
-	mlx_image_t* img_wall = mlx_texture_to_image(map.mlx, wall);
-	mlx_resize_image(img_player, TILE_SIZE, TILE_SIZE);
-	mlx_resize_image(img_exit, TILE_SIZE, TILE_SIZE);
-	mlx_resize_image(img_coin, TILE_SIZE, TILE_SIZE);
-	mlx_resize_image(img_wall, TILE_SIZE, TILE_SIZE);
+	// mlx_image_t* img_player = mlx_texture_to_image(map.mlx, player);
+	// mlx_image_t* img_exit = mlx_texture_to_image(map.mlx, exit);
+	// mlx_image_t* img_coin = mlx_texture_to_image(map.mlx, coin);
+	// mlx_image_t* img_wall = mlx_texture_to_image(map.mlx, wall);
+	// mlx_resize_image(img_player, TILE_SIZE, TILE_SIZE);
+	// mlx_resize_image(img_exit, TILE_SIZE, TILE_SIZE);
+	// mlx_resize_image(img_coin, TILE_SIZE, TILE_SIZE);
+	// mlx_resize_image(img_wall, TILE_SIZE, TILE_SIZE);
 
 	
-	// i = 0;
-	// while (i < map.width)
-	// {
-	// 	j = 0;
-	// 	while (j < map.height)
-	// 	{
-	// 		if (i == map.width - 1 || j == map.height - 1 || i == 0 || j == 0)
-	// 		{
-
-	// 		}
-	// 		else
-	// 		{
-	// 			if (map.map[j][i] == 'P')
-	// 			{
-	// 				if (!img_player || (mlx_image_to_window(map.mlx, img_player, i * TILE_SIZE, j * TILE_SIZE) < 0))
-	// 					return (ft_error(-21));
-	// 			}
-	// 			if (map.map[j][i] == 'E')
-	// 			{
-	// 				if (!img_exit || (mlx_image_to_window(map.mlx, img_exit, i * TILE_SIZE, j * TILE_SIZE) < 0))
-	// 					return (ft_error(-21));
-	// 			}
-	// 			if (map.map[j][i] == 'C')
-	// 			{
-	// 				if (!img_coin || (mlx_image_to_window(map.mlx, img_coin, i * TILE_SIZE, j * TILE_SIZE) < 0))
-	// 					return (ft_error(-21));
-	// 			}
-	// 			if (map.map[j][i] == '1')
-	// 			{
-	// 				if (!img_wall || (mlx_image_to_window(map.mlx, img_wall, i * TILE_SIZE, j * TILE_SIZE) < 0))
-	// 					return (ft_error(-21));
-	// 			}
-	// 		}
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
+	
 
 	// Even after the image is being displayed, we can still modify the buffer.
 	// mlx_put_pixel(img, 0, 0, 0xFF0000FF);
@@ -157,6 +144,9 @@ int	main(int argn, char *argc[])
 	// Register a hook and pass mlx as an optional param.
 	// NOTE: Do this before calling mlx_loop!
 	// mlx_loop_hook(mlx, ft_hook, mlx);
+	map.frame = 0;
+	map.time = 0;
+	mlx_loop_hook(map.mlx, ft_frame, &map);
 	mlx_loop(map.mlx);
 	// mlx_terminate(mlx);
 

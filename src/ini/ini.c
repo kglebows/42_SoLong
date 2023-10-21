@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:26:27 by kglebows          #+#    #+#             */
-/*   Updated: 2023/09/29 14:47:12 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/21 12:29:49 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int	ft_ini(t_map *map)
 	if (map_check(map) != 0)
 		return (2);
 	if (ft_map(map) != 0)
+		return (2);
+	if (ft_image_map(map) != 0)
 		return (2);
 	return (0);
 }

@@ -1,6 +1,8 @@
 {
 	"files.associations": {
 		"system_error": "c",
-		"so_long.h": "c"
+		"so_long.h": "c",
+		"libft.h": "c",
+		"iterator": "c"
 	}
 }
