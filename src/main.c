@@ -12,9 +12,9 @@
 
 #include "so_long.h"
 
-void	print_map(t_map *map)
+void print_map(t_map *map)
 {
-	int			i;
+	int i;
 
 	i = 0;
 	ft_printf("Map %dx%d :: C:%d E:%d.%d P:%d.%d\n", map->width, map->height, map->C_num, map->E_pos.x, map->E_pos.y, map->P_pos.x, map->P_pos.y);
@@ -33,11 +33,10 @@ void	print_map(t_map *map)
 // 	ft_printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
 // }
 
-void	free_map(t_map *map)
+void free_map(t_map *map)
 {
-	int				i;
-	int				j;
-
+	int i;
+	int j;
 
 	i = 1;
 	while (i < map->width - 1)
@@ -53,10 +52,10 @@ void	free_map(t_map *map)
 	}
 }
 
-void	frame_map(t_map *map)
+void frame_map(t_map *map)
 {
-	int				i;
-	int				j;
+	int i;
+	int j;
 
 	// free_map(map);
 	i = 1;
@@ -77,12 +76,11 @@ void	frame_map(t_map *map)
 	}
 }
 
-
-void	ft_frame(void *param)
+void ft_frame(void *param)
 {
-	t_map	*map;
+	t_map *map;
 
-	map = (t_map *) param;
+	map = (t_map *)param;
 	if (map->time < 903)
 		map->time++;
 	else
@@ -96,22 +94,64 @@ void	ft_frame(void *param)
 			map->frame = 0;
 		frame_map(map);
 		// ft_printf("%d FRAME\n", map->frame);
-		
 	}
 	// ft_printf("%d\n", map->mlx->delta_time);
 	// free_map(map);
 }
 
-int	main(int argn, char *argc[])
+void my_keyhook(mlx_key_data_t keydata, t_map *map)
 {
-	t_map		map;
+
+	if (keydata.key == MLX_KEY_W && keydata.action == MLX_RELEASE)
+	{
+		/*check element function -> takes player position + Key position value, checks a symbol above, if 
+		1 - "imp dandle animation (frames inside jump)" 
+		C - change to 0 and move player to this position. change number if c by -1
+		0 - move player to this position
+		P - move player to this postion
+		E - move player to this position, if coin=0 - end game. else do imp dandle constantly.
+
+
+		i need to do position arythmetic
+		functions:
+		pos = pos(x,y)
+		pos = add_pos(pos, pos)
+		pos = dist_pos(pos, pos) - returns distance between two positions to calculate for enemy_frame
+
+
+		i need to track player position and draw imp based on that
+		P statrtign position of imp
+
+		later for enemy it is gonna be usfull also moving function of the enemy_frame
+		*/
+	}
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE)
+	{
+
+	}	
+	if (keydata.key == MLX_KEY_S && keydata.action == MLX_RELEASE)
+	{
+
+	}	
+	if (keydata.key == MLX_KEY_D && keydata.action == MLX_RELEASE)
+	{
+
+	}
+		
+
+}
+
+
+int main(int argn, char *argc[])
+{
+	t_map map;
 
 	if (argn < 2)
 		return (ft_error(-18));
 	if (argn > 2)
 		return (ft_error(-19));
 	map.path = argc[1];
-	if (ft_ini(&map)!= 0)
+	if (ft_ini(&map) != 0)
 		return (2);
 	print_map(&map);
 
@@ -120,36 +160,14 @@ int	main(int argn, char *argc[])
 	if (!map.mlx)
 		return (ft_error(-20));
 	ft_background(&map);
-	
-	// mlx_texture_t *player = mlx_load_png("./src/assets/player.png");
-	// mlx_texture_t *exit = mlx_load_png("./src/assets/exit.png");
-	// mlx_texture_t *coin = mlx_load_png("./src/assets/coin.png");
-	// mlx_texture_t *wall = mlx_load_png("./src/assets/wall.png");
-	
-	// mlx_image_t* img_player = mlx_texture_to_image(map.mlx, player);
-	// mlx_image_t* img_exit = mlx_texture_to_image(map.mlx, exit);
-	// mlx_image_t* img_coin = mlx_texture_to_image(map.mlx, coin);
-	// mlx_image_t* img_wall = mlx_texture_to_image(map.mlx, wall);
-	// mlx_resize_image(img_player, TILE_SIZE, TILE_SIZE);
-	// mlx_resize_image(img_exit, TILE_SIZE, TILE_SIZE);
-	// mlx_resize_image(img_coin, TILE_SIZE, TILE_SIZE);
-	// mlx_resize_image(img_wall, TILE_SIZE, TILE_SIZE);
 
-	
-	
+	mlx_key_hook(map.mlx, &my_keyhook, &map);	
 
-	// Even after the image is being displayed, we can still modify the buffer.
-	// mlx_put_pixel(img, 0, 0, 0xFF0000FF);
-
-	// Register a hook and pass mlx as an optional param.
-	// NOTE: Do this before calling mlx_loop!
-	// mlx_loop_hook(mlx, ft_hook, mlx);
 	map.frame = 0;
 	map.time = 0;
 	mlx_loop_hook(map.mlx, ft_frame, &map);
 	mlx_loop(map.mlx);
 	// mlx_terminate(mlx);
 
-	
 	return (0);
 }
