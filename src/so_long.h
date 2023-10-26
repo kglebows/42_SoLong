@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/21 15:11:03 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:16:37 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,9 @@ mlx_image_t	*ft_put_imp(int x, int y, t_map *map);
 mlx_image_t	*ft_put_exit(int x, int y, t_map *map);
 
 unsigned int	ft_random(unsigned int min, unsigned int max);
+
+t_position ft_pos(int x, int y);
+t_position ft_pos_add(t_position org, t_position mov);
+t_position ft_pos_dist(t_position org, t_position mov);
 
 #endif
