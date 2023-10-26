@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/26 15:19:17 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/26 16:53:00 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void free_map(t_map *map)
 	int i;
 	int j;
 
-	i = 1;
+	i = 0;
 	while (i < map->width - 1)
 	{
-		j = 1;
+		j = 0;
 		while (j < map->height - 1)
 		{
 			if (map->after_img[i][j] != NULL)
@@ -58,15 +58,16 @@ void frame_map(t_map *map)
 	int j;
 
 	// free_map(map);
+	map->img_map[0][0] = ft_put_imp(map);
 	i = 1;
 	while (i < map->width - 1)
 	{
 		j = 1;
 		while (j < map->height - 1)
 		{
-			if (map->map[j][i] == 'P')
-				map->img_map[i][j] = ft_put_imp(i, j, map);
-			else if (map->map[j][i] == 'E')
+			// if (map->map[j][i] == 'P')
+			// 	map->img_map[i][j] = ft_put_imp(i, j, map);
+			if (map->map[j][i] == 'E')
 				map->img_map[i][j] = ft_put_exit(i, j, map);
 			else if (map->map[j][i] == 'C')
 				map->img_map[i][j] = ft_put_coin(i, j, map);
@@ -99,48 +100,60 @@ void ft_frame(void *param)
 	// free_map(map)d sfsd fdsf sggdgsdg sdfwe werwe wer; sdasd fasff wwww eee qwrsa asf qwa sadf qwe sdw qwerqsad qwe hjh gh hjghj fgfgt ddd
 }
 
+void	check_element(t_position pos, t_map *map)
+{
+	if (map->map[pos.y][pos.x] == '1')
+	{
+		// map->jiggle += 2;
+		ft_printf("WALL\n");
+	}
+	else if (map->map[pos.y][pos.x] == '0' || map->map[pos.y][pos.x] == 'P' )
+	{
+		map->jiggle = 2;
+		map->P_pos = pos;
+		ft_printf("GO %d:%d\n", pos.x, pos.y);
+	}
+	else if (map->map[pos.y][pos.x] == 'C')
+	{
+		map->P_pos = pos;
+		map->jiggle += 6;
+		map->map[pos.y][pos.x] = '0';
+		map->C_num--;
+		mlx_delete_image(map->mlx, map->img_map[pos.x][pos.y]);
+		ft_printf("COIN! %d:%d\n", pos.x, pos.y);
+	}
+	else if (map->map[pos.y][pos.x] == 'E')
+	{
+		if (map->C_num != 0)
+		{
+			map->jiggle = 1;
+			map->P_pos = pos;
+			ft_printf("EXIT\n");
+		}
+		else
+		{
+			map->jiggle = 1;
+			map->P_pos = pos;
+			map->jiggle = 1000000;
+			ft_printf("U WON!!!!");
+		}
+	}
+}
+
 void my_keyhook(mlx_key_data_t keydata, void *ptr)
 {
 
 	t_map	*map;
 
 	map = ptr;
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_RELEASE)
-	{
-		ft_printf("W%d", map->);
-	}
-		/*check element function -> takes player position + Key position value, checks a symbol above, if 
-		1 - "imp dandle animation (frames inside jump)" 
-		C - change to 0 and move player to this position. change number if c by -1
-		0 - move player to this position
-		P - move player to this postion
-		E - move player to this position, if coin=0 - end game. else do imp dandle constantly.
-
-dasdw dfdsew dsa
-		i need to do position arythmetic
-		functions:
-		pos = pos(x,y)
-		pos = add_pos(pos, pos)
-		pos = dist_pos(pos, pos) - returns distance between two positions to calculate for enemy_frame
-
-		i need to track player position and draw imp based on that
-		P statrtign position of imp
-
-		later for enemy it is gonna be usfull also moving function of the enemy_frame
-		*/
-	
-	if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE)
-	{
-		ft_printf("A");
-	}	
-	if (keydata.key == MLX_KEY_S && keydata.action == MLX_RELEASE)
-	{
-		ft_printf("S");
-	}	
-	if (keydata.key == MLX_KEY_D && keydata.action == MLX_RELEASE)
-	{
-		ft_printf("D");
-	}
+	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+		check_element(ft_pos_add(map->P_pos, ft_pos(0,-1)), map);
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+		check_element(ft_pos_add(map->P_pos, ft_pos(-1,0)), map);
+	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+		check_element(ft_pos_add(map->P_pos, ft_pos(0,1)), map);
+	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+		check_element(ft_pos_add(map->P_pos, ft_pos(1,0)), map);
 		
 
 }

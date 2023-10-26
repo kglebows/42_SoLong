@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:40:21 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/21 13:59:21 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/26 16:07:29 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ t_position	ft_find_element(char **cpy, char c, t_map *map)
 		while (pos.x < map->width)
 		{
 			if (cpy[pos.y][pos.x] == c)
+			{
+				pos.y--;
+				pos.x--;
 				return (pos);
+			}
 			pos.x++;
 		}
 		pos.y++;
