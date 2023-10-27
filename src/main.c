@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/26 16:53:00 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:11:30 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void frame_map(t_map *map)
 	int j;
 
 	// free_map(map);
-	map->img_map[0][0] = ft_put_imp(map);
 	i = 1;
 	while (i < map->width - 1)
 	{
@@ -75,6 +74,7 @@ void frame_map(t_map *map)
 		}
 		i++;
 	}
+	map->img_map[0][0] = ft_put_imp(map);
 }
 
 void ft_frame(void *param)
@@ -82,7 +82,7 @@ void ft_frame(void *param)
 	t_map *map;
 
 	map = (t_map *)param;
-	if (map->time < 903)
+	if (map->time < 603)
 		map->time++;
 	else
 		map->time = 0;
@@ -104,19 +104,22 @@ void	check_element(t_position pos, t_map *map)
 {
 	if (map->map[pos.y][pos.x] == '1')
 	{
-		// map->jiggle += 2;
+		map->jiggle = 0;
+		map->no = 3;
 		ft_printf("WALL\n");
 	}
 	else if (map->map[pos.y][pos.x] == '0' || map->map[pos.y][pos.x] == 'P' )
 	{
+		map->no = 0;
 		map->jiggle = 2;
 		map->P_pos = pos;
 		ft_printf("GO %d:%d\n", pos.x, pos.y);
 	}
 	else if (map->map[pos.y][pos.x] == 'C')
 	{
+		map->no = 0;
 		map->P_pos = pos;
-		map->jiggle += 6;
+		map->jiggle = 6;
 		map->map[pos.y][pos.x] = '0';
 		map->C_num--;
 		mlx_delete_image(map->mlx, map->img_map[pos.x][pos.y]);
@@ -126,15 +129,16 @@ void	check_element(t_position pos, t_map *map)
 	{
 		if (map->C_num != 0)
 		{
-			map->jiggle = 1;
 			map->P_pos = pos;
+			map->jiggle = 0;
+			map->no = 10000;
 			ft_printf("EXIT\n");
 		}
 		else
 		{
-			map->jiggle = 1;
+			map->no = 0;
 			map->P_pos = pos;
-			map->jiggle = 1000000;
+			map->jiggle = 10000;
 			ft_printf("U WON!!!!");
 		}
 	}
@@ -178,7 +182,7 @@ int main(int argn, char *argc[])
 		return (ft_error(-20));
 	ft_background(&map);
 
-	mlx_key_hook(map.mlx, &my_keyhook, &map);	
+	mlx_key_hook(map.mlx, &my_keyhook, &map);
 
 	map.frame = 0;
 	map.time = 0;

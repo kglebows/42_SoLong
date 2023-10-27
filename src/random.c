@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 09:38:58 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/21 10:40:36 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:05:24 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 unsigned int seed(void)
 {
-	return (rand());
+	unsigned int	seed;
+
+	seed = rand();
+	return (seed);
 }
 
 // unsigned int seed(void)

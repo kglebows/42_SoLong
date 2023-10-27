@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/26 15:53:00 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:13:31 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_map
 	int					E_num;
 	int					C_num;
 	int					jiggle;
+	int					no;
 	t_position			P_pos;
 	t_position			E_pos;
 	mlx_t				*mlx;
@@ -69,3 +70,14 @@ t_position ft_pos_add(t_position org, t_position mov);
 t_position ft_pos_dist(t_position org, t_position mov);
 
 #endif
+
+/*
+ToDo:
+-Enemy
+-Movement counter
+-Enemy chase
+-End game
+-Try to draw a popup
+-A way to launch a different map
+
+*/

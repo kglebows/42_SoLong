@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:03:45 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/26 16:57:45 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:05:14 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,11 @@ mlx_image_t	*ft_put_imp(t_map *map)
 		// random_path = r_path(map->frame % 4 + 9);
 		random_path = r_path(map->frame % 8 + 7);
 		map->jiggle--;
+	}
+	else if (map->no != 0)
+	{
+		random_path = r_path(map->frame % 7 + 2);
+		map->no--;
 	}
 	else if (map->time < 90)
 		random_path = r_path(map->frame % 7);

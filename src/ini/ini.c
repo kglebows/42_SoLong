@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:26:27 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/21 12:29:49 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:53:55 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	map_initial_values(t_map *map)
 	map->C_num = 0;
 	map->E_num = 0;
 	map->P_num = 0;
+	map->jiggle = 0;
+	map->no = 0;
 	map->fd = open(map->path, 0);
 	if (map->fd < 0)
 		return (ft_error(-1));
