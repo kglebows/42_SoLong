@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/27 14:13:31 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:33:07 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_map
 	int					C_num;
 	int					jiggle;
 	int					no;
+	int					level;
+	int					endgame;
 	t_position			P_pos;
 	t_position			E_pos;
 	mlx_t				*mlx;
@@ -62,6 +64,7 @@ int	ft_put_wall(int x, int y, t_map *map);
 mlx_image_t	*ft_put_coin(int x, int y, t_map *map);
 mlx_image_t	*ft_put_imp(t_map *map);
 mlx_image_t	*ft_put_exit(int x, int y, t_map *map);
+mlx_image_t	*ft_put_enemy(t_map *map);
 
 unsigned int	ft_random(unsigned int min, unsigned int max);
 

@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/27 14:11:30 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:21:27 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,38 @@ void free_map(t_map *map)
 	}
 }
 
+void	ft_move_enemy(t_map *map)
+{
+	t_position	pos;
+
+	pos = ft_pos_dist(map->E_pos, map->P_pos);
+
+	if (pos.x > 0)
+		pos = ft_pos(-1, 0);
+	else if (pos.x < 0)
+		pos = ft_pos(1, 0);
+	else if (pos.y > 0)
+		pos = ft_pos(0, -1);
+	else if (pos.y < 0)
+		pos = ft_pos(0, 1);
+	else
+		ft_error(-23);
+	if (map->level > map->C_num && ft_random(0, map->C_num) == 1)
+		map->E_pos = ft_pos_add(map->E_pos, pos);
+}
+
 void frame_map(t_map *map)
 {
 	int i;
 	int j;
 
-	// free_map(map);
 	i = 1;
 	while (i < map->width - 1)
 	{
 		j = 1;
 		while (j < map->height - 1)
 		{
-			// if (map->map[j][i] == 'P')
-			// 	map->img_map[i][j] = ft_put_imp(i, j, map);
+
 			if (map->map[j][i] == 'E')
 				map->img_map[i][j] = ft_put_exit(i, j, map);
 			else if (map->map[j][i] == 'C')
@@ -75,6 +93,17 @@ void frame_map(t_map *map)
 		i++;
 	}
 	map->img_map[0][0] = ft_put_imp(map);
+	if (map->level > map->C_num)
+	{
+		// ft_move_enemy(map);
+		map->img_map[0][1] = ft_put_enemy(map);
+		if (map->P_pos.x == map->E_pos.x && map->P_pos.y == map->E_pos.y )
+		{
+			map->jiggle = 10000;
+			ft_printf("U LOST!!!!");
+			map->endgame = 1;
+		}
+	}
 }
 
 void ft_frame(void *param)
@@ -107,6 +136,7 @@ void	check_element(t_position pos, t_map *map)
 		map->jiggle = 0;
 		map->no = 3;
 		ft_printf("WALL\n");
+		ft_move_enemy(map);
 	}
 	else if (map->map[pos.y][pos.x] == '0' || map->map[pos.y][pos.x] == 'P' )
 	{
@@ -114,6 +144,7 @@ void	check_element(t_position pos, t_map *map)
 		map->jiggle = 2;
 		map->P_pos = pos;
 		ft_printf("GO %d:%d\n", pos.x, pos.y);
+		ft_move_enemy(map);
 	}
 	else if (map->map[pos.y][pos.x] == 'C')
 	{
@@ -121,9 +152,12 @@ void	check_element(t_position pos, t_map *map)
 		map->P_pos = pos;
 		map->jiggle = 6;
 		map->map[pos.y][pos.x] = '0';
-		map->C_num--;
 		mlx_delete_image(map->mlx, map->img_map[pos.x][pos.y]);
+		if (map->level == 0)
+			map->level = map->C_num;
+		map->C_num--;
 		ft_printf("COIN! %d:%d\n", pos.x, pos.y);
+		ft_move_enemy(map);
 	}
 	else if (map->map[pos.y][pos.x] == 'E')
 	{
@@ -140,6 +174,7 @@ void	check_element(t_position pos, t_map *map)
 			map->P_pos = pos;
 			map->jiggle = 10000;
 			ft_printf("U WON!!!!");
+			map->endgame = 1;
 		}
 	}
 }

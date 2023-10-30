@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:40:21 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/27 14:02:45 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:08:11 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_position	ft_find_element(char **cpy, char c, t_map *map)
 {
 	t_position		pos;
 
+	pos.x = 0;
 	pos.y = 0;
 	while (pos.y < map->height)
 	{
@@ -24,9 +25,10 @@ t_position	ft_find_element(char **cpy, char c, t_map *map)
 		{
 			if (cpy[pos.y][pos.x] == c)
 			{
-				pos.y--;
-				pos.x--;
-				ft_printf("\nPOSITION ASSIGNMENT: %d:%d\n", pos.x, pos.y);
+				// ft_printf("\nPOSITION ASSIGNMENT: %d:%d\n", pos.x, pos.y);
+				// pos.y--;
+				// pos.x--;
+				// ft_printf("\nPOSITION ASSIGNMENT: %d:%d\n", pos.x, pos.y);
 				return (pos);
 			}
 			pos.x++;

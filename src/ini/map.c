@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:30:06 by kglebows          #+#    #+#             */
-/*   Updated: 2023/09/29 14:43:19 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:16:32 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	ft_map(t_map *map)
 	if (ft_find_element(cpy, 'C', map).x != -1)
 		return (ft_error(-17));
 	map->P_pos = ft_find_element(map->map, 'P', map);
-	map->E_pos = ft_find_element(map->map, 'E', map);
 	while (i-- > 0)
 		free(cpy[i]);
 	free(cpy);

@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:03:45 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/27 14:05:14 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:20:28 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ mlx_image_t	*ft_put_enemy(t_map *map)
 	mlx_resize_image(img, TILE_SIZE * 1, TILE_SIZE * 1);
 	if (mlx_image_to_window(map->mlx, img, (map->E_pos.x * TILE_SIZE) + TILE_SIZE * 0, (map->E_pos.y * TILE_SIZE) + TILE_SIZE * 0) < 0)
 		return (ft_error(-22), NULL);
+	map->after_img[0][1] = map->img_map[0][1];
 	return (img);
 }
 
@@ -171,26 +172,3 @@ mlx_image_t	*ft_put_exit(int x, int y, t_map *map)
 	map->after_img[x][y] = map->img_map[x][y];
 	return (img);
 }
-// mlx_image_t	*ft_put_coin(int x, int y, t_map *map)
-// {
-// 	mlx_texture_t			*png;
-// 	char					*path;
-// 	char					*random_path;
-// 	mlx_image_t				*img;
-
-// 	random_path = r_path(map->frame % 6);
-// 	path = ft_strjoin("./src/assets/coin/tile", random_path);
-// 	free(random_path);
-// 	png = mlx_load_png(path);
-// 	free(path);
-// 	map->img_map[x][y] = mlx_texture_to_image(map->mlx, png);
-// 	mlx_delete_texture(png);
-// 	if (!map->img_map[x][y])
-// 		return (ft_error(-21), NULL);
-// 	mlx_resize_image(map->img_map[x][y], TILE_SIZE * 0.75, TILE_SIZE * 0.75);
-// 	if (mlx_image_to_window(map->mlx, map->img_map[x][y], (x * TILE_SIZE) + TILE_SIZE * 0.125, (y * TILE_SIZE) + TILE_SIZE * 0.125) < 0)
-// 		return (ft_error(-22), NULL);
-// 	if (map->img_map[x][y] != NULL)
-// 			mlx_delete_image(map->mlx, map->img_map[x][y]);
-// 	return (map->img_map[x][y]);
-// }
