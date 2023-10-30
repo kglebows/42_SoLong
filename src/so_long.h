@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/30 17:33:07 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/30 19:01:03 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,10 @@ ToDo:
 -End game
 -Try to draw a popup
 -A way to launch a different map
-
+- name to Inventory Imp
+- Add in bottom string : Inventory space 21/34  (filled space walls + coins) /max space) 
+- map reset after lost
+- YOU WON! and YOU LOST! ON screen with udied darksouls looks.
+- Add text in beginning "collect the coins and escape through the portal"
+- Add text "the inventory owner can follow you when you move"
 */

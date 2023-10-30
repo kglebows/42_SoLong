@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/30 18:21:27 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:37:56 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_move_enemy(t_map *map)
 		pos = ft_pos(0, 1);
 	else
 		ft_error(-23);
-	if (map->level > map->C_num && ft_random(0, map->C_num) == 1)
+	if (map->level > map->C_num && ft_random(0, map->C_num + 1) == 1)
 		map->E_pos = ft_pos_add(map->E_pos, pos);
 }
 
@@ -185,14 +185,17 @@ void my_keyhook(mlx_key_data_t keydata, void *ptr)
 	t_map	*map;
 
 	map = ptr;
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-		check_element(ft_pos_add(map->P_pos, ft_pos(0,-1)), map);
-	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
-		check_element(ft_pos_add(map->P_pos, ft_pos(-1,0)), map);
-	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
-		check_element(ft_pos_add(map->P_pos, ft_pos(0,1)), map);
-	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
-		check_element(ft_pos_add(map->P_pos, ft_pos(1,0)), map);
+	if (map->endgame != 1)
+	{
+		if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+			check_element(ft_pos_add(map->P_pos, ft_pos(0,-1)), map);
+		if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+			check_element(ft_pos_add(map->P_pos, ft_pos(-1,0)), map);
+		if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+			check_element(ft_pos_add(map->P_pos, ft_pos(0,1)), map);
+		if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+			check_element(ft_pos_add(map->P_pos, ft_pos(1,0)), map);
+	}
 		
 
 }
