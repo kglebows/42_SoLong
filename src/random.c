@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 09:38:58 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/30 18:35:20 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/04 16:56:40 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,20 @@ unsigned int seed(void)
 	return (seed);
 }
 
-// unsigned int seed(void)
-// {
-// 	static unsigned int		rand = 141252362;
-// 	rand++;
-// 	return (rand);
-// }
-
 unsigned int	ft_random(unsigned int min, unsigned int max)
 {
-	// int					lcg_multiplier;
-	// int					lcg_increment;
-	// int					lcg_modulus;
 	unsigned int		random;
+	unsigned int		tmp;
 
-	// lcg_multiplier = 1664525;
-	// lcg_increment = 1013904223;
-	// lcg_modulus = (int)pow(2, 32);
-	// random = (lcg_multiplier * seed() + lcg_increment) % lcg_modulus;
 	random = seed();
-	random = (random % (max - min)) + min;
+	if (max == min)
+		return (0);
+	if (min > max)
+	{
+		tmp = max;
+		max = min;
+		min = tmp;
+	}
+	random = (random % (max - min + 1)) + min;
 	return (random);
 }

@@ -8,10 +8,10 @@
 			"name": "(lldb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "/Users/kglebows/Desktop/Workspace/42_SoLong/so_long",
+			"program": "/Users/kglebows/Desktop/Workspace/42_SL/so_long",
 			"args": ["map.ber"],
 			"stopAtEntry": false,
-			"cwd": "/Users/kglebows/Desktop/Workspace/42_SoLong",
+			"cwd": "/Users/kglebows/Desktop/Workspace/42_SL",
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "lldb"

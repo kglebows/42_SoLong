@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:30:06 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/30 18:16:32 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/04 17:56:44 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	map_flood(char **cpy, t_map *map)
 	}
 }
 
-int	create_map(t_map *map)
+void	create_map(t_map *map)
 {
 	char		*str;
 	int			i;
@@ -50,10 +50,10 @@ int	create_map(t_map *map)
 	i = 0;
 	map->fd = open(map->path, 0);
 	if (map->fd < 1)
-		return (ft_error(-8));
+		ft_error(-8, map);
 	map->map = (char **) calloc(map->height, sizeof(char *));
 	if (!map->map)
-		return (ft_error(-12));
+		ft_error(-12, map);
 	while (i < map->height)
 	{
 		str = get_next_line(map->fd);
@@ -64,23 +64,21 @@ int	create_map(t_map *map)
 	while (i < map->width)
 	{
 		if (str[i] != '1')
-			return (ft_error(-13));
+			ft_error(-13, map);
 		i++;
 	}
 	close(map->fd);
-	return (0);
 }
 
-int	ft_map(t_map *map)
+void	ft_map(t_map *map)
 {
 	char		**cpy;
 	int			i;
 
-	if (create_map(map) != 0)
-		return (2);
+	create_map(map);
 	cpy = (char **) calloc(map->height, sizeof(char *));
 	if (!cpy)
-		return (ft_error(-16));
+		ft_error(-16, map);
 	i = 0;
 	while (i < map->height)
 	{
@@ -89,11 +87,10 @@ int	ft_map(t_map *map)
 	}
 	map_flood(cpy, map);
 	if (ft_find_element(cpy, 'C', map).x != -1)
-		return (ft_error(-17));
+		ft_error(-17, map);
 	map->P_pos = ft_find_element(map->map, 'P', map);
 	while (i-- > 0)
 		free(cpy[i]);
 	free(cpy);
 	i = 0;
-	return (0);
 }

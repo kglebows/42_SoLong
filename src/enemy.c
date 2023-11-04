@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pos.c                                           :+:      :+:    :+:   */
+/*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 14:47:20 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/04 11:44:08 by kglebows         ###   ########.fr       */
+/*   Created: 2023/11/04 15:22:50 by kglebows          #+#    #+#             */
+/*   Updated: 2023/11/04 16:55:57 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_position ft_pos(int x, int y)
+void	ft_move_enemy(t_map *map)
 {
-	t_position pos;
+	t_position	pos;
 
-	pos.x = x;
-	pos.y = y;
-	return (pos);
-}
+	pos = ft_pos_dist(map->E_pos, map->P_pos);
 
-t_position ft_pos_add(t_position org, t_position mov)
-{
-	t_position pos;
-
-	pos.x = org.x + mov.x;
-	pos.y = org.y + mov.y;
-	return (pos);
-}
-
-t_position ft_pos_dist(t_position org, t_position mov)
-{
-	t_position pos;
-
-	pos.x = org.x - mov.x;
-	pos.y = org.y - mov.y;
-	return (pos);
+	if (pos.x > 0)
+		pos = ft_pos(-1, 0);
+	else if (pos.x < 0)
+		pos = ft_pos(1, 0);
+	else if (pos.y > 0)
+		pos = ft_pos(0, -1);
+	else if (pos.y < 0)
+		pos = ft_pos(0, 1);
+	if (map->level > map->C_num && ft_random(0, map->C_num + 1) == 1)
+		map->E_pos = ft_pos_add(map->E_pos, pos);
+	if (map->level > map->C_num)
+		ft_put_enemy(map);
 }

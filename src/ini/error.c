@@ -6,61 +6,73 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 19:29:04 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/30 17:47:57 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/04 18:11:07 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int ft_error(int code)
+void error__(int code)
+{
+	if (code == -23)
+		ft_printf("Error! Map file name have to end with *.ber!\n");
+	else
+		ft_printf("Error! Please contact the developer.\n");
+}
+
+void error_(int code)
+{
+	if (code == -12)
+		ft_printf("Error! Memory allocation failed!\n");
+	else if (code == -13)
+		ft_printf("Error! Map bot wall incomplete.\n");
+	else if (code == -14)
+		ft_printf("Error! Map is missing an Exit.\n");
+	else if (code == -15)
+		ft_printf("Error! Map is missing a Player.\n");
+	else if (code == -16)
+		ft_printf("Error! Memory allocation failed!\n");
+	else if (code == -17)
+		ft_printf("Error! Map is unsolvable.\n");
+	else if (code == -18)
+		ft_printf("Error! Wrong input! Missing map path!\n");
+	else if (code == -19)
+		ft_printf("Error! Wrong input! Too many arguments!\n");
+	else if (code == -20)
+		ft_printf("Error! MLX failure!\n");
+	else if (code == -21)
+		ft_printf("Error! MLX image generation failed!\n");
+	else if (code == -22)
+		ft_printf("Error! MLX image to window failure!\n");
+	else
+		error__(code);
+}
+
+void ft_error(int code, t_map *map)
 {
 	if (code == -1)
-		return (ft_printf("Map data corrupted or missing!\n") * 0 + 2);
+		ft_printf("Error! Map data corrupted or missing!\n");
 	else if (code == -2)
-		return (ft_printf("Map data incorrect! Not a rectangle.\n") * 0 + 2);
+		ft_printf("Error! Map is ot a rectangle.\n");
 	else if (code == -3)
-		return (ft_printf("Map data incorrect! Characters other than allowed found.\n") * 0 + 2);
+		ft_printf("Error! Map have forbidden Characters.\n");
 	else if (code == -4)
-		return (ft_printf("Map data incorrect! More than one exit.\n") * 0 + 2);
+		ft_printf("Error! More than one exit.\n");
 	else if (code == -5)
-		return (ft_printf("Map data incorrect! More than one player.\n") * 0 + 2);
+		ft_printf("Error! More than one player.\n");
 	else if (code == -6)
-		return (ft_printf("Map data incorrect! Map is too small.\n") * 0 + 2);
+		ft_printf("Error! Map is too small.\n");
 	else if (code == -7)
-		return (ft_printf("Map data incorrect! Map is missing collectibles.\n") * 0 + 2);
+		ft_printf("Error! Map is missing collectibles.\n");
 	else if (code == -8)
-		return (ft_printf("Map data access failed!\n") * 0 + 2);
+		ft_printf("Error! Map data access failed!\n");
 	else if (code == -9)
-		return (ft_printf("Map data incorrect! Map side walls incomplete.\n") * 0 + 2);
+		ft_printf("Error! Map side walls incomplete.\n");
 	else if (code == -10)
-		return (ft_printf("Map data incorrect! Map top wall incomplete.\n") * 0 + 2);
+		ft_printf("Error! Map top wall incomplete.\n");
 	else if (code == -11)
-		return (ft_printf("Map data empty!\n") * 0 + 2);
-	else if (code == -12)
-		return (ft_printf("Memory allocation for map failed!\n") * 0 + 2);
-	else if (code == -13)
-		return (ft_printf("Map data incorrect! Map bot wall incomplete.\n") * 0 + 2);
-	else if (code == -14)
-		return (ft_printf("Map data incorrect! Map is missing an Exit.\n") * 0 + 2);
-	else if (code == -15)
-		return (ft_printf("Map data incorrect! Map is missing a Player.\n") * 0 + 2);
-	else if (code == -16)
-		return (ft_printf("Memory allocation for map copy failed!\n") * 0 + 2);
-	else if (code == -17)
-		return (ft_printf("Map data incorrect! Map is unsolvable.\n") * 0 + 2);
-	else if (code == -18)
-		return (ft_printf("Wrong input! Missing map path!\n") * 0 + 2);
-	else if (code == -19)
-		return (ft_printf("Wrong input! Too many arguments!\n") * 0 + 2);
-	else if (code == -20)
-		return (ft_printf("MLX gone bad! brrrr bww bum pfff pstttt trrr. it's dead.\n:'(\n") * 0 + 2);
-	else if (code == -21)
-		return (ft_printf("MLX gone bad! image generation failed!\n:'(\n") * 0 + 2);
-	else if (code == -22)
-		return (ft_printf("MLX gone bad! image to window failure!\n:'(\n") * 0 + 2);
-	else if (code == -23)
-		return (ft_printf("Enemy Movement Error!\n") * 0 + 2);
+		ft_printf("Error! Map data empty!\n");
 	else
-		return (ft_printf("Unknown Error! Please contact the developer.\n") * 0 + 2);
-	//clean up : close fd if exists
+		error_(code);
+	ft_exit(map);
 }
