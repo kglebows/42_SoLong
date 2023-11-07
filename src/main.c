@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/04 18:20:46 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:06:22 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,37 @@ void my_keyhook(mlx_key_data_t keydata, void *ptr)
 	}
 }
 
+void load_img_map(t_map *map)
+{
+	int					x;
+	int					y;
+	mlx_image_t			****img;
+
+	img = map->img_map;
+	img[0][0] = ft_put_imp(map);
+	ft_put_enemy(map);
+	x = 1;
+	while (x < map->width - 1)
+	{
+		y = 1;
+		while (y < map->height - 1)
+		{
+ 			if (map->map[y][x] == 'E')
+				img[y][x] = ft_put_exit(x, y, map);
+			else if (map->map[y][x] == 'C')
+				img[y][x] = ft_put_coin(x, y, map);
+			y++;
+		}
+		x++;
+	}
+}
+
 void	initial_values(char *str, t_map *map)
 {
+	map->difficulty = 9;
 	map->path = str;
-	map->after_img = NULL;
+	map->background_map = NULL;
+	map->wall_map = NULL;
 	map->img_map = NULL;
 	map->map = NULL;
 	map->mlx = NULL;
@@ -58,6 +85,7 @@ void	initial_values(char *str, t_map *map)
 	map->level = 0;
 	map->endgame = 0;
 	map->steps = 0;
+	map->time = 0;
 }
 
 int main(int argn, char *argc[])
@@ -76,11 +104,10 @@ int main(int argn, char *argc[])
 	if (!map.mlx)
 		ft_error(-20, &map);
 	ft_background(&map);
+	load_img_map(&map);
 	ft_put_string_inventory(&map);
 	ft_put_string("    GET COINS!!!", &map);
 	mlx_key_hook(map.mlx, &my_keyhook, &map);
-	map.frame = 0;
-	map.time = 0;
 	mlx_loop_hook(map.mlx, ft_frame, &map);
 	mlx_loop(map.mlx);
 	ft_exit(&map);

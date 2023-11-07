@@ -9,7 +9,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "/Users/kglebows/Desktop/Workspace/42_SL/so_long",
-			"args": ["map.ber"],
+			"args": ["map2.ber"],
 			"stopAtEntry": false,
 			"cwd": "/Users/kglebows/Desktop/Workspace/42_SL",
 			"environment": [],

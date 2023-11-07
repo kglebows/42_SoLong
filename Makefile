@@ -6,7 +6,7 @@
 #    By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 18:20:23 by kglebows          #+#    #+#              #
-#    Updated: 2023/11/04 15:28:13 by kglebows         ###   ########.fr        #
+#    Updated: 2023/11/07 15:18:11 by kglebows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ OBJ_MLX := ${SRC_MLX:.c=.o}
 
 SRCS	= main.c mlx_handler.c random.c background.c ft_pos.c\
 		ini/error.c ini/ini.c ini/map.c ini/utils.c \
-		move.c exit.c utility.c enemy.c frame.c
+		move.c exit.c utility.c enemy.c frame.c mlx_load.c mlx_string.c
 OBJS	= $(SRCS:%.c=$(OBJDIR)/%.o)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

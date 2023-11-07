@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:06:31 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/04 18:30:01 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:56:20 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	move_coin(t_position pos, t_map *map)
 	map->P_pos = pos;
 	map->jiggle = 6;
 	map->map[pos.y][pos.x] = 'X';
-	mlx_delete_image(map->mlx, map->img_map[pos.x][pos.y]);
 	if (map->level == 0)
 	{
 		map->level = map->C_num;

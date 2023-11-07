@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:40:21 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/04 17:47:57 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:13:57 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,71 @@ t_position	ft_find_element(char **cpy, char c, t_map *map)
 	return (pos);
 }
 
-void	after_image(t_map *map)
+void	ft_image_map(t_map *map)
 {
-	int			i;
+	int				x;
+	int				y;
 
-	map->after_img = (mlx_image_t ***) ft_calloc(map->height,
-					sizeof(mlx_image_t **));
-	if (!map->after_img)
+	map->img_map = (mlx_image_t ****) ft_calloc(map->height,
+					sizeof(mlx_image_t ***));
+	if (!map->img_map)
 		ft_error(-12, map);
-	i = 0;
-	while (i < map->height)
+	x = 0;
+	while (x < map->height)
 	{
-		map->after_img[i] = (mlx_image_t **) ft_calloc(map->width,
-							sizeof(mlx_image_t *));
-		if (!map->after_img[i])
+		map->img_map[x] = (mlx_image_t ***) ft_calloc(map->width,
+						sizeof(mlx_image_t **));
+		if (!map->img_map[x])
 			ft_error(-12, map);
-		i++;
+		y = 0;
+		while (y < map->width)
+		{
+			map->img_map[x][y] = (mlx_image_t **) ft_calloc(16,
+						sizeof(mlx_image_t *));
+			if (!map->img_map[x][y])
+				ft_error(-12, map);
+			y++;
+		}
+		x++;
 	}
 }
 
-void	ft_image_map(t_map *map)
+void	wall_map(t_map *map)
 {
 	int				i;
 
-	map->img_map = (mlx_image_t ***) ft_calloc(map->height,
+	map->wall_map = (mlx_image_t ***) ft_calloc(map->height,
 					sizeof(mlx_image_t **));
-	if (!map->img_map)
+	if (!map->wall_map)
 		ft_error(-12, map);
 	i = 0;
 	while (i < map->height)
 	{
-		map->img_map[i] = (mlx_image_t **) ft_calloc(map->width,
+		map->wall_map[i] = (mlx_image_t **) ft_calloc(map->width,
 						sizeof(mlx_image_t *));
-		if (!map->img_map[i])
+		if (!map->wall_map[i])
 			ft_error(-12, map);
 		i++;
 	}
-	after_image(map);
 }
+
+void	ft_background_map(t_map *map)
+{
+	int				i;
+
+	map->background_map = (mlx_image_t ***) ft_calloc(map->height,
+					sizeof(mlx_image_t **));
+	if (!map->background_map)
+		ft_error(-12, map);
+	i = 0;
+	while (i < map->height)
+	{
+		map->background_map[i] = (mlx_image_t **) ft_calloc(map->width,
+						sizeof(mlx_image_t *));
+		if (!map->background_map[i])
+			ft_error(-12, map);
+		i++;
+	}
+	wall_map(map);
+}
+
