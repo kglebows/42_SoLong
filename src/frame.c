@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:27:03 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/07 18:54:40 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:26:30 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void frame(t_map *map)
 	int					x;
 	int					y;
 
+	player(map->img_map[0][0], map);
+	move(map);
 	x = 1;
 	while (x < map->width - 1)
 	{
@@ -104,7 +106,7 @@ void frame(t_map *map)
 		{
  			if (map->map[y][x] == 'E')
 				portal(map->img_map[y][x], map);
-			if (map->map[y][x] == 'X')
+			else if (map->map[y][x] == 'X')
 				Xcoin(map->img_map[y][x], 6);
 			else if (map->map[y][x] == 'C')
 				animate(map->img_map[y][x], 6, 0, map);
@@ -112,8 +114,6 @@ void frame(t_map *map)
 		}
 		x++;
 	}
-	player(map->img_map[0][0], map);
-	move(map);
 }
 
 void ft_frame(void *param)

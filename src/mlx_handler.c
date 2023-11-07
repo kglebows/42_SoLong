@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:03:45 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/07 18:42:50 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:29:35 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ mlx_image_t	**ft_put_exit(int x, int y, t_map *map)
 	mlx_image_t				**img;
 	unsigned int			j;
 
-	img = map->img_map[x][y];
+	img = map->img_map[y][x];
 	j = 0;
 	while (j < 8)
 	{

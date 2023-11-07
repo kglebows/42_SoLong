@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:40:21 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/07 19:13:57 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:37:19 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,30 @@ t_position	ft_find_element(char **cpy, char c, t_map *map)
 
 void	ft_image_map(t_map *map)
 {
-	int				x;
-	int				y;
+	int				i;
+	int				j;
 
 	map->img_map = (mlx_image_t ****) ft_calloc(map->height,
 					sizeof(mlx_image_t ***));
 	if (!map->img_map)
 		ft_error(-12, map);
-	x = 0;
-	while (x < map->height)
+	i = 0;
+	while (i < map->height)
 	{
-		map->img_map[x] = (mlx_image_t ***) ft_calloc(map->width,
+		map->img_map[i] = (mlx_image_t ***) ft_calloc(map->width,
 						sizeof(mlx_image_t **));
-		if (!map->img_map[x])
+		if (!map->img_map[i])
 			ft_error(-12, map);
-		y = 0;
-		while (y < map->width)
+		j = 0;
+		while (j < map->width)
 		{
-			map->img_map[x][y] = (mlx_image_t **) ft_calloc(16,
+			map->img_map[i][j] = (mlx_image_t **) ft_calloc(16,
 						sizeof(mlx_image_t *));
-			if (!map->img_map[x][y])
+			if (!map->img_map[i][j])
 				ft_error(-12, map);
-			y++;
+			j++;
 		}
-		x++;
+		i++;
 	}
 }
 
