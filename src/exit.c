@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:06:09 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/07 19:38:15 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 20:17:53 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ void	ft_exit(t_map *map)
 	clean_map(map);
 	clean_img_map(map);
 	clean_mlx(map);
+	system("leaks so_long");
 	exit(0);
 }

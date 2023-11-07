@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/07 19:06:22 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 20:17:49 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void load_img_map(t_map *map)
 
 void	initial_values(char *str, t_map *map)
 {
-	map->difficulty = 9;
+	map->difficulty = 99;
 	map->path = str;
 	map->background_map = NULL;
 	map->wall_map = NULL;
@@ -80,7 +80,7 @@ void	initial_values(char *str, t_map *map)
 	map->P_num = 0;
 	map->W_num = 0;
 	map->jiggle = 0;
-	map->no = 0;
+	map->no = 100;
 	map->E_pos = ft_pos(1, 1);
 	map->level = 0;
 	map->endgame = 0;

@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:27:03 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/07 19:26:30 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:46:29 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void animate(mlx_image_t **img, int maxf, int anim, t_map *map)
 
 	frame = map->time % maxf + anim;
 	i = 0;
-	while (i < 14)
+	while (i < 16)
 	{
 		if (img[i] != NULL && i == frame)
 			img[i]->enabled = 1;
@@ -65,7 +65,7 @@ void	player(mlx_image_t **img, t_map *map)
 		animate(img, 3, 3, map);
 		map->no--;
 	}
-	else if (map->time % 50 < 7)
+	else if (map->time % 100 < 14)
 		animate(img, 7, 0, map);
 	else
 		animate(img, 1, 0, map);
