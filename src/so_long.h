@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:12:23 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/04 17:55:58 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:06:59 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ void ft_free_map(t_map *map);
 void ft_restart_map(t_map *map);
 
 void ft_frame(void *param);
+
+void ft_after_img(t_map *map);
 
 #endif

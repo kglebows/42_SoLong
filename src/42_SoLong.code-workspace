@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "../../42_SoLong"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"system_error": "c",
+			"so_long.h": "c",
+			"libft.h": "c",
+			"iterator": "c"
+		}
+	}
+}

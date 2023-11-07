@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:03:45 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/04 19:31:59 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:31:18 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,13 @@ mlx_image_t	*ft_put_coin(int x, int y, t_map *map)
 	mlx_resize_image(img, TILE_SIZE * 0.50, TILE_SIZE * 0.50);
 	if (mlx_image_to_window(map->mlx, img, (x * TILE_SIZE) + TILE_SIZE * 0.25, (y * TILE_SIZE) + TILE_SIZE * 0.25) < 0)
 		ft_error(-22, map);
+	
+	if (map->after_img[x][y])
+		mlx_delete_image(map->mlx, map->after_img[x][y]);
+	
 	// map->after_img[x][y] = map->img_map[x][y];
+	
+	// map->img_map[x][y] = map->after_img[x][y];
 	return (img);
 }
 
@@ -104,7 +110,7 @@ mlx_image_t	*ft_put_imp(t_map *map)
 		random_path = r_path(map->frame % 7 + 2);
 		map->no--;
 	}
-	else if (map->time < 90)
+	else if (map->frame < 90)
 		random_path = r_path(map->frame % 7);
 	else
 		random_path = r_path(0);
@@ -120,6 +126,10 @@ mlx_image_t	*ft_put_imp(t_map *map)
 	if (mlx_image_to_window(map->mlx, img, (map->P_pos.x * TILE_SIZE) + TILE_SIZE * 0.125, (map->P_pos.y * TILE_SIZE) + TILE_SIZE * 0.3) < 0)
 		ft_error(-22, map);
 	// map->after_img[0][0] = map->img_map[0][0];
+
+	if (map->after_img[map->P_pos.x][map->P_pos.y])
+		mlx_delete_image(map->mlx, map->after_img[map->P_pos.x][map->P_pos.y]);
+		
 	return (img);
 }
 

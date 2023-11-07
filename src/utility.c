@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:23:07 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/04 19:24:01 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:10:13 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,33 @@ void ft_free_map(t_map *map)
 			if (map->after_img[i][j] != NULL)
 			{
 				mlx_delete_image(map->mlx, map->after_img[i][j]);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void ft_after_img(t_map *map)
+{
+	int i;
+	int j;
+
+	if (map->img_map[0][0] != NULL)
+	{
+		map->after_img[0][0] = map->img_map[0][0];
+		mlx_delete_image(map->mlx, map->img_map[0][0]);
+	}
+	i = 1;
+	while (i < map->width - 1)
+	{
+		j = 1;
+		while (j < map->height - 1)
+		{
+			if (map->img_map[i][j] != NULL)
+			{
+				map->after_img[i][j] = map->img_map[i][j];
+				mlx_delete_image(map->mlx, map->img_map[i][j]);
 			}
 			j++;
 		}
