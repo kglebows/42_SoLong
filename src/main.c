@@ -6,150 +6,110 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:26:44 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/21 15:18:42 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:20:24 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	print_map(t_map *map)
-{
-	int			i;
-
-	i = 0;
-	ft_printf("Map %dx%d :: C:%d E:%d.%d P:%d.%d\n", map->width, map->height, map->C_num, map->E_pos.x, map->E_pos.y, map->P_pos.x, map->P_pos.y);
-	while (i < map->height)
-	{
-		ft_printf("%s", map->map[i]);
-		i++;
-	}
-}
-
-// Print the window width and height.
-// static void ft_hook(void* param)
-// {
-// 	const mlx_t* mlx = param;
-
-// 	ft_printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
-// }
-
-void	free_map(t_map *map)
-{
-	int				i;
-	int				j;
-
-
-	i = 1;
-	while (i < map->width - 1)
-	{
-		j = 1;
-		while (j < map->height - 1)
-		{
-			if (map->after_img[i][j] != NULL)
-				mlx_delete_image(map->mlx, map->after_img[i][j]);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	frame_map(t_map *map)
-{
-	int				i;
-	int				j;
-
-	// free_map(map);
-	i = 1;
-	while (i < map->width - 1)
-	{
-		j = 1;
-		while (j < map->height - 1)
-		{
-			if (map->map[j][i] == 'P')
-				map->img_map[i][j] = ft_put_imp(i, j, map);
-			else if (map->map[j][i] == 'E')
-				map->img_map[i][j] = ft_put_exit(i, j, map);
-			else if (map->map[j][i] == 'C')
-				map->img_map[i][j] = ft_put_coin(i, j, map);
-			j++;
-		}
-		i++;
-	}
-}
-
-
-void	ft_frame(void *param)
+void	my_keyhook(mlx_key_data_t keydata, void *ptr)
 {
 	t_map	*map;
 
-	map = (t_map *) param;
-	if (map->time < 903)
-		map->time++;
-	else
-		map->time = 0;
-	if (map->time % 10 == 2)
-		free_map(map);
-	if (map->time % 10 == 0)
+	map = ptr;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		ft_exit(map);
+	if (map->endgame != 1)
 	{
-		map->frame++;
-		if (map->frame > 12)
-			map->frame = 0;
-		frame_map(map);
-		// ft_printf("%d FRAME\n", map->frame);
-		
+		if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+			ft_move(ft_pos_add(map->p_pos, ft_pos(0, -1)), map);
+		else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+			ft_move(ft_pos_add(map->p_pos, ft_pos(-1, 0)), map);
+		else if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+			ft_move(ft_pos_add(map->p_pos, ft_pos(0, 1)), map);
+		else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+			ft_move(ft_pos_add(map->p_pos, ft_pos(1, 0)), map);
 	}
-	// ft_printf("%d\n", map->mlx->delta_time);
-	// free_map(map);
+	else
+	{
+		if (keydata.key == MLX_KEY_L && keydata.action == MLX_PRESS)
+			ft_restart_map(map);
+		else if (keydata.key == MLX_KEY_E && keydata.action == MLX_PRESS)
+			ft_exit(map);
+	}
+}
+
+void	load_img_map(t_map *map)
+{
+	int					x;
+	int					y;
+	mlx_image_t			****img;
+
+	img = map->img_map;
+	img[0][0] = ft_put_imp(map);
+	ft_put_enemy(map);
+	x = 1;
+	while (x < map->width - 1)
+	{
+		y = 1;
+		while (y < map->height - 1)
+		{
+			if (map->map[y][x] == 'E')
+				img[y][x] = ft_put_exit(x, y, map);
+			else if (map->map[y][x] == 'C')
+				img[y][x] = ft_put_coin(x, y, map);
+			y++;
+		}
+		x++;
+	}
+}
+
+void	initial_values(char *str, t_map *map)
+{
+	map->difficulty = 0;
+	map->path = str;
+	map->background_map = NULL;
+	map->wall_map = NULL;
+	map->img_map = NULL;
+	map->map = NULL;
+	map->mlx = NULL;
+	map->width = 0;
+	map->height = 0;
+	map->c_num = 0;
+	map->e_num = 0;
+	map->p_num = 0;
+	map->w_num = 0;
+	map->jiggle = 0;
+	map->no = 100;
+	map->e_pos = ft_pos(1, 1);
+	map->level = 0;
+	map->endgame = 0;
+	map->steps = 0;
+	map->time = 0;
 }
 
 int	main(int argn, char *argc[])
 {
-	t_map		map;
+	t_map	map;
 
+	initial_values(argc[1], &map);
 	if (argn < 2)
-		return (ft_error(-18));
+		ft_error(-18, &map);
 	if (argn > 2)
-		return (ft_error(-19));
-	map.path = argc[1];
-	if (ft_ini(&map)!= 0)
-		return (2);
-	print_map(&map);
-
+		ft_error(-19, &map);
+	ft_ini(&map);
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	map.mlx = mlx_init(TILE_SIZE * map.width, TILE_SIZE * map.height, "Pickpocket Imp", true);
+	map.mlx = mlx_init(TILE_SIZE * map.width, TILE_SIZE * map.height,
+			"Inventory Imp", true);
 	if (!map.mlx)
-		return (ft_error(-20));
+		ft_error(-20, &map);
 	ft_background(&map);
-	
-	// mlx_texture_t *player = mlx_load_png("./src/assets/player.png");
-	// mlx_texture_t *exit = mlx_load_png("./src/assets/exit.png");
-	// mlx_texture_t *coin = mlx_load_png("./src/assets/coin.png");
-	// mlx_texture_t *wall = mlx_load_png("./src/assets/wall.png");
-	
-	// mlx_image_t* img_player = mlx_texture_to_image(map.mlx, player);
-	// mlx_image_t* img_exit = mlx_texture_to_image(map.mlx, exit);
-	// mlx_image_t* img_coin = mlx_texture_to_image(map.mlx, coin);
-	// mlx_image_t* img_wall = mlx_texture_to_image(map.mlx, wall);
-	// mlx_resize_image(img_player, TILE_SIZE, TILE_SIZE);
-	// mlx_resize_image(img_exit, TILE_SIZE, TILE_SIZE);
-	// mlx_resize_image(img_coin, TILE_SIZE, TILE_SIZE);
-	// mlx_resize_image(img_wall, TILE_SIZE, TILE_SIZE);
-
-	
-	
-
-	// Even after the image is being displayed, we can still modify the buffer.
-	// mlx_put_pixel(img, 0, 0, 0xFF0000FF);
-
-	// Register a hook and pass mlx as an optional param.
-	// NOTE: Do this before calling mlx_loop!
-	// mlx_loop_hook(mlx, ft_hook, mlx);
-	map.frame = 0;
-	map.time = 0;
+	load_img_map(&map);
+	ft_put_string_inventory(&map);
+	ft_put_string("    GET COINS!!!", &map);
+	mlx_key_hook(map.mlx, &my_keyhook, &map);
 	mlx_loop_hook(map.mlx, ft_frame, &map);
 	mlx_loop(map.mlx);
-	// mlx_terminate(mlx);
-
-	
+	ft_exit(&map);
 	return (0);
 }

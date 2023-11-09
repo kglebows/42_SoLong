@@ -6,38 +6,37 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:26:27 by kglebows          #+#    #+#             */
-/*   Updated: 2023/10/21 12:29:49 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:29:09 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	calculate_elements(char *str, t_map *map)
+void	calculate_elements(char *str, t_map *map)
 {
 	while (*str != '\n' && *str)
 	{
 		if (*str == 'C')
-			map->C_num++;
+			map->c_num++;
 		else if (*str == 'E')
-			map->E_num++;
+			map->e_num++;
 		else if (*str == 'P')
-			map->P_num++;
+			map->p_num++;
 		else if (*str == '0')
 			;
 		else if (*str == '1')
-			;
+			map->w_num++;
 		else
-			return (ft_printf("-> '%c' in line %d\n", *str, map->height) * 0 + ft_error(-3));
+			ft_error(-3, map);
 		str++;
 	}
-	if (map->E_num > 1)
-		return (ft_error(-4));
-	if (map->P_num > 1)
-		return (ft_error(-5));
-	return (0);
+	if (map->e_num > 1)
+		ft_error(-4, map);
+	if (map->p_num > 1)
+		ft_error(-5, map);
 }
 
-int	check_walls_topside(char *str, t_map *map)
+void	check_walls_topside(char *str, t_map *map)
 {
 	int			i;
 
@@ -47,19 +46,18 @@ int	check_walls_topside(char *str, t_map *map)
 		while (i < map->width)
 		{
 			if (str[i] != '1')
-				return (ft_error(-10));
+				ft_error(-10, map);
 			i++;
 		}
 	}
 	else
 	{
 		if (str[0] != '1' || str[map->width - 1] != '1')
-			return (ft_error(-9));
+			ft_error(-9, map);
 	}
-	return (0);
 }
 
-int	map_check(t_map *map)
+void	map_check(t_map *map)
 {
 	char		*str;
 
@@ -68,50 +66,46 @@ int	map_check(t_map *map)
 	while (str)
 	{
 		if (ft_strlen_nl(str) != map->width)
-			return (ft_error(-2));
-		if (check_walls_topside(str, map) != 0)
-			return (2);
+			ft_error(-2, map);
+		check_walls_topside(str, map);
 		map->height++;
-		if (calculate_elements(str, map) != 0)
-			return (2);
+		calculate_elements(str, map);
+		free(str);
 		str = get_next_line(map->fd);
 	}
+	free(str);
 	if (map->height < 3 || map->width < 3)
-		return (ft_error(-6));
-	if (map->C_num == 0)
-		return (ft_error(-7));
-	if (map->E_num == 0)
-		return (ft_error(-14));
-	if (map->P_num == 0)
-		return (ft_error(-15));
+		ft_error(-6, map);
+	if (map->c_num == 0)
+		ft_error(-7, map);
+	if (map->e_num == 0)
+		ft_error(-14, map);
+	if (map->p_num == 0)
+		ft_error(-15, map);
 	close(map->fd);
-	return (0);
 }
 
-int	map_initial_values(t_map *map)
+void	check_ber(t_map *map)
 {
-	map->width = 0;
-	map->height = 0;
-	map->C_num = 0;
-	map->E_num = 0;
-	map->P_num = 0;
+	int			l;
+	char		*s;
+
+	s = map->path;
+	l = ft_strlen(s) - 1;
+	if (s[l - 3] != '.' || s[l - 2] != 'b' || s[l - 1] != 'e' || s[l] != 'r')
+		ft_error(-23, map);
 	map->fd = open(map->path, 0);
 	if (map->fd < 0)
-		return (ft_error(-1));
+		ft_error(-1, map);
 	if (map->fd == 0)
-		return (ft_error(-11));
-	return (0);
+		ft_error(-11, map);
 }
 
-int	ft_ini(t_map *map)
+void	ft_ini(t_map *map)
 {
-	if (map_initial_values(map) != 0)
-		return (2);
-	if (map_check(map) != 0)
-		return (2);
-	if (ft_map(map) != 0)
-		return (2);
-	if (ft_image_map(map) != 0)
-		return (2);
-	return (0);
+	check_ber(map);
+	map_check(map);
+	ft_map(map);
+	ft_image_map(map);
+	ft_background_map(map);
 }

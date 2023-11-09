@@ -6,7 +6,7 @@
 #    By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 18:20:23 by kglebows          #+#    #+#              #
-#    Updated: 2023/10/21 11:13:02 by kglebows         ###   ########.fr        #
+#    Updated: 2023/11/09 13:44:23 by kglebows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 
 CFLAGS_MLX := -Wextra -Wall -Werror -Wunreachable-code -Ofast
-LIBMLX := ./src/lib/MLX42
+LIBMLX := ./lib/MLX42
 
 HEADERS := -I ./include -I $(LIBMLX)/include
 
@@ -33,8 +33,12 @@ LIB_MLX	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 SRC_MLX	:= $(shell find ./src -iname "*.c")
 OBJ_MLX := ${SRC_MLX:.c=.o}
 
-SRCS	= main.c mlx_handler.c random.c background.c\
-		ini/error.c ini/ini.c ini/map.c ini/utils.c
+SRCS	= main.c \
+		ini/error.c ini/ini.c ini/map.c ini/utils.c \
+		vis/background.c vis/utility.c vis/frame.c \
+		vis/mlx_handler.c vis/mlx_load.c vis/mlx_string.c \
+		game/enemy.c game/ft_pos.c game/move.c game/random.c \
+		exit/exit.c 
 OBJS	= $(SRCS:%.c=$(OBJDIR)/%.o)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

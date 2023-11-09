@@ -6,14 +6,14 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 17:26:11 by kglebows          #+#    #+#             */
-/*   Updated: 2023/09/22 16:13:55 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:31:58 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 void	ft_buffer2line(char *line, t_buffer *buffer, int start)
-{	
+{
 	int	i;
 
 	i = 0;
@@ -67,7 +67,7 @@ char	*ft_line_create(t_buffer *buffer, char *line)
 	if (buffer->str[i] == '\n')
 		i++;
 	if (!line && i > 0)
-	{	
+	{
 		line = malloc((sizeof(char) * (i - buffer->i + 1)));
 		if (!line)
 			return (NULL);
