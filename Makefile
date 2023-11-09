@@ -6,7 +6,7 @@
 #    By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/16 18:20:23 by kglebows          #+#    #+#              #
-#    Updated: 2023/11/09 13:44:23 by kglebows         ###   ########.fr        #
+#    Updated: 2023/11/09 14:17:49 by kglebows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ OBJDIR = ./bin
 SRCDIR = ./src
 
 LIBMLXA := $(LIBMLX)/build/libmlx42.a
+MLX_PATH := lib/MLX42
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIB_MLX	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
@@ -53,11 +54,16 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
 
-all: makelibft $(LIBMLXA) $(NAME)
+all: init-submodules $(NAME)
+
+init-submodules:
+	@if [ -z "$(shell ls -A $(MLX_PATH))" ]; then \
+		git submodule init $(MLX_PATH); \
+		git submodule update $(MLX_PATH); \
+	fi
 
 $(LIBMLXA):
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
-
 
 makelibft:
 	@if [ ! -f "$(LIBFTNAME)" ]; then \
@@ -67,7 +73,7 @@ makelibft:
 		fi; \
 	fi
 
-$(NAME): $(OBJS)
+$(NAME): makelibft $(LIBMLXA) $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_MLX) $(HEADERS) -L$(OBJDIR)/libft -lft
 
 clean-empty-dirs:
