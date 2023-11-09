@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:06:31 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/09 13:25:32 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:51:17 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	move_coin(t_position pos, t_map *map)
 		map->level = map->c_num;
 		ft_put_string("DON'T GET CAUGHT!!!", map);
 	}
+	ft_move_enemy(map);
 	map->c_num--;
 	if (map->c_num == 0)
 		ft_put_string("  GO TO PORTAL!!!", map);
-	ft_move_enemy(map);
 }
 
 void	move_exit(t_position pos, t_map *map)
