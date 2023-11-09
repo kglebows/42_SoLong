@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:40:21 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/07 19:37:19 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:31:12 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ void	ft_image_map(t_map *map)
 	int				j;
 
 	map->img_map = (mlx_image_t ****) ft_calloc(map->height,
-					sizeof(mlx_image_t ***));
+			sizeof(mlx_image_t ***));
 	if (!map->img_map)
 		ft_error(-12, map);
 	i = 0;
 	while (i < map->height)
 	{
 		map->img_map[i] = (mlx_image_t ***) ft_calloc(map->width,
-						sizeof(mlx_image_t **));
+				sizeof(mlx_image_t **));
 		if (!map->img_map[i])
 			ft_error(-12, map);
 		j = 0;
 		while (j < map->width)
 		{
 			map->img_map[i][j] = (mlx_image_t **) ft_calloc(16,
-						sizeof(mlx_image_t *));
+					sizeof(mlx_image_t *));
 			if (!map->img_map[i][j])
 				ft_error(-12, map);
 			j++;
@@ -68,14 +68,14 @@ void	wall_map(t_map *map)
 	int				i;
 
 	map->wall_map = (mlx_image_t ***) ft_calloc(map->height,
-					sizeof(mlx_image_t **));
+			sizeof(mlx_image_t **));
 	if (!map->wall_map)
 		ft_error(-12, map);
 	i = 0;
 	while (i < map->height)
 	{
 		map->wall_map[i] = (mlx_image_t **) ft_calloc(map->width,
-						sizeof(mlx_image_t *));
+				sizeof(mlx_image_t *));
 		if (!map->wall_map[i])
 			ft_error(-12, map);
 		i++;
@@ -87,18 +87,17 @@ void	ft_background_map(t_map *map)
 	int				i;
 
 	map->background_map = (mlx_image_t ***) ft_calloc(map->height,
-					sizeof(mlx_image_t **));
+			sizeof(mlx_image_t **));
 	if (!map->background_map)
 		ft_error(-12, map);
 	i = 0;
 	while (i < map->height)
 	{
 		map->background_map[i] = (mlx_image_t **) ft_calloc(map->width,
-						sizeof(mlx_image_t *));
+				sizeof(mlx_image_t *));
 		if (!map->background_map[i])
 			ft_error(-12, map);
 		i++;
 	}
 	wall_map(map);
 }
-

@@ -6,7 +6,7 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:26:27 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/07 14:35:11 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:29:09 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ void	calculate_elements(char *str, t_map *map)
 	while (*str != '\n' && *str)
 	{
 		if (*str == 'C')
-			map->C_num++;
+			map->c_num++;
 		else if (*str == 'E')
-			map->E_num++;
+			map->e_num++;
 		else if (*str == 'P')
-			map->P_num++;
+			map->p_num++;
 		else if (*str == '0')
 			;
 		else if (*str == '1')
-			map->W_num++;
+			map->w_num++;
 		else
 			ft_error(-3, map);
 		str++;
 	}
-	if (map->E_num > 1)
+	if (map->e_num > 1)
 		ft_error(-4, map);
-	if (map->P_num > 1)
+	if (map->p_num > 1)
 		ft_error(-5, map);
 }
 
@@ -70,15 +70,17 @@ void	map_check(t_map *map)
 		check_walls_topside(str, map);
 		map->height++;
 		calculate_elements(str, map);
+		free(str);
 		str = get_next_line(map->fd);
 	}
+	free(str);
 	if (map->height < 3 || map->width < 3)
 		ft_error(-6, map);
-	if (map->C_num == 0)
+	if (map->c_num == 0)
 		ft_error(-7, map);
-	if (map->E_num == 0)
+	if (map->e_num == 0)
 		ft_error(-14, map);
-	if (map->P_num == 0)
+	if (map->p_num == 0)
 		ft_error(-15, map);
 	close(map->fd);
 }
@@ -90,7 +92,7 @@ void	check_ber(t_map *map)
 
 	s = map->path;
 	l = ft_strlen(s) - 1;
-	if (s[l - 3] !=  '.' || s[l - 2] != 'b' || s[l - 1] != 'e' || s[l] != 'r')
+	if (s[l - 3] != '.' || s[l - 2] != 'b' || s[l - 1] != 'e' || s[l] != 'r')
 		ft_error(-23, map);
 	map->fd = open(map->path, 0);
 	if (map->fd < 0)

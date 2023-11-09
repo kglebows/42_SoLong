@@ -6,13 +6,13 @@
 /*   By: kglebows <kglebows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 19:29:04 by kglebows          #+#    #+#             */
-/*   Updated: 2023/11/04 18:11:07 by kglebows         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:28:54 by kglebows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void error__(int code)
+void	error__(int code)
 {
 	if (code == -23)
 		ft_printf("Error! Map file name have to end with *.ber!\n");
@@ -20,7 +20,7 @@ void error__(int code)
 		ft_printf("Error! Please contact the developer.\n");
 }
 
-void error_(int code)
+void	error_(int code)
 {
 	if (code == -12)
 		ft_printf("Error! Memory allocation failed!\n");
@@ -48,7 +48,7 @@ void error_(int code)
 		error__(code);
 }
 
-void ft_error(int code, t_map *map)
+void	ft_error(int code, t_map *map)
 {
 	if (code == -1)
 		ft_printf("Error! Map data corrupted or missing!\n");
